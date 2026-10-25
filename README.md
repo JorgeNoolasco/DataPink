@@ -10,12 +10,13 @@ Aplicação estática em HTML5, CSS3 e JavaScript Vanilla. Usa ES modules no nav
 
 ## 2. Criar estrutura, políticas, views e demonstração
 
-No **SQL Editor**, execute os arquivos na ordem abaixo, cada um uma vez, em um projeto novo:
+No **SQL Editor**, execute os arquivos na ordem abaixo em um projeto novo. Se você já executou a versão anterior de `policies.sql`, execute apenas a migração de cursos antes de continuar.
 
 1. `sql/schema.sql` — tabelas e relacionamentos (`professor`, `curso`, `turma`, `aluno`, `matricula`, `nota`).
-2. `sql/policies.sql` — RLS, funções de autorização e grants. Professores só acessam suas turmas e alunos associados; administradores têm acesso global. Visitantes não recebem acesso às tabelas acadêmicas.
-3. `sql/views.sql` — `vw_boletim_aluno` (somente docentes autorizados, com RLS das tabelas base) e `vw_portfolio_cursos` (somente nome e descrição para a vitrine pública).
-4. `sql/seed.sql` — cursos, turmas e registros de demonstração fictícios. O professor de demonstração começa sem uma conta Auth associada.
+2. `sql/policies.sql` — RLS, funções de autorização e grants. Professores autorizados acessam seus dados acadêmicos; administradores têm acesso global. Visitantes não recebem acesso às tabelas acadêmicas.
+3. `sql/migration_001_course_access.sql` — permite que docentes autorizados consultem o catálogo de cursos para criar turmas; pode ser executado novamente.
+4. `sql/views.sql` — `vw_boletim_aluno` (somente docentes autorizados, com RLS das tabelas base) e `vw_portfolio_cursos` (somente nome e descrição para a vitrine pública).
+5. `sql/seed.sql` — cursos, turmas e registros de demonstração fictícios. O professor de demonstração começa sem uma conta Auth associada.
 
 ## 3. Criar e vincular contas de docentes
 
@@ -78,7 +79,7 @@ O login por senha abre `admin.html` após autenticar. O redirecionamento cadastr
 
 1. Abra a página inicial sem sessão: cursos podem aparecer na vitrine; nenhuma tabela com nomes, notas ou contatos de alunos é pública.
 2. Tente `/admin.html` sem login: a página envia para o login. Tente entrar com uma conta sem linha vinculada em `professor`: o Auth encerra a sessão e nega acesso.
-3. Entre com um docente vinculado: confira as turmas atribuídas, cadastre um aluno, associe-o a uma turma, edite os dados e exclua um cadastro fictício. A exclusão avisa que matrículas e notas dependentes também serão apagadas.
+3. Entre com um docente vinculado: confira as turmas atribuídas, cadastre e edite um aluno, crie uma turma, lance uma avaliação, edite-a e exclua registros de teste. A exclusão avisa que matrículas e notas dependentes também serão apagadas.
 4. Entre com dois docentes: cada um deve ver apenas suas turmas e os alunos acessíveis por elas, além dos próprios cadastros recém-criados.
 5. Promova uma conta de teste a `admin`: ela deve consultar dados de todas as turmas.
 6. Confira a view de boletim com uma sessão docente autenticada (aba **Network** do navegador ou REST API usando o token dessa sessão): ela deve retornar somente turmas acessíveis. Não use o SQL Editor para validar RLS: ele executa como banco privilegiado. Pela API anon, `/rest/v1/vw_boletim_aluno` deve ser negado e `/rest/v1/vw_portfolio_cursos` deve funcionar.
@@ -86,4 +87,4 @@ O login por senha abre `admin.html` após autenticar. O redirecionamento cadastr
 
 ## Escopo da interface
 
-O painel oferece CRUD completo de alunos e associação de matrícula a uma turma no cadastro. Também mostra turmas e contagens de matrícula. A tabela de notas é mantida no banco e disponibilizada pela view segura de boletim; lançamento de notas e manutenção de cursos/turmas não fazem parte das telas atuais.
+O painel oferece CRUD para alunos, turmas e avaliações, além da associação de alunos a turmas. Cursos são provisionados no banco e aparecem na vitrine pública; a tela de administração de cursos não faz parte desta interface. As alterações de notas e matrículas passam pelas políticas RLS do banco.

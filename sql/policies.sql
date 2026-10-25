@@ -84,9 +84,7 @@ CREATE POLICY professor_admin_excluir ON public.professor FOR DELETE TO authenti
   USING ((SELECT public.is_admin()));
 
 CREATE POLICY curso_ler_acessivel ON public.curso FOR SELECT TO authenticated
-  USING ((SELECT public.is_admin()) OR EXISTS (
-    SELECT 1 FROM public.turma t WHERE t.id_curso = curso.id_curso AND public.can_access_turma(t.id_turma)
-  ));
+  USING ((SELECT public.is_staff()));
 CREATE POLICY curso_admin_inserir ON public.curso FOR INSERT TO authenticated
   WITH CHECK ((SELECT public.is_admin()));
 CREATE POLICY curso_admin_editar ON public.curso FOR UPDATE TO authenticated

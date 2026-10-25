@@ -673,3 +673,35 @@ td strong {
     background: #fff0f2;
     color: #942c4c
 }
+
+/* Console layout: open, lilac and card-based, matching the DataBloom references. */
+.admin-page { background: #f8f5ff; }
+.sidebar { background: #f3edff; border-right-color: #ece3fb; }
+.sidebar-nav a.active { background: var(--color-primary); color: #fff; border-radius: 999px; }
+.sidebar-nav a:hover:not(.active) { background: #e9ddff; }
+.admin-header { background: rgba(255,255,255,.88); }
+.admin-content { max-width: 1440px; }
+.stat-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.stat-card { height: 148px; border: 1px solid #eee8f4; border-radius: 27px; background: #fff; }
+.stat-card-pink { background: #fff; }
+.stat-card-lilac { background: #fff; }
+.stat-card-blue { background: #fff; }
+.dashboard-grid { grid-template-columns: minmax(0, 1.7fr) minmax(250px, .8fr); }
+.panel-card, .quick-card { border-radius: 25px; }
+.panel-card { border-color: #eee8f4; }
+.quick-card { background: linear-gradient(145deg, #302a43, #43365e); }
+.student-dialog { border-radius: 24px; box-shadow: 8px 8px 0 #292536; }
+.student-dialog form { gap: 10px; }
+.student-dialog .input-field { background: #f7f2ff; border-color: transparent; border-radius: 999px; }
+.student-dialog .input-field:focus { background: #fff; }
+@media(max-width:1050px) {
+    .stat-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media(max-width:720px) {
+    .stat-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat-card { height: 124px; padding: 15px; border-radius: 20px; }
+    .stat-card>b { font-size: 1.65rem; }
+}
+
+.heading-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.heading-actions .btn{font-size:.76rem}.heading-actions .date-chip{white-space:nowrap}
+@media(max-width:720px){.heading-actions{justify-content:flex-start}.heading-actions .date-chip{width:100%}}

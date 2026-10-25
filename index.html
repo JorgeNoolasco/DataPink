@@ -23,50 +23,250 @@
     <a class="brand" href="index.html" aria-label="DataPink, início"><span
         class="brand-mark">d<span>p</span></span><span>data<span class="brand-accent">pink</span><small>PORTFÓLIO
           ACADÊMICO</small></span></a>
-    <nav class="site-nav" aria-label="Navegação principal"><a href="#projetos">Projetos</a><a href="#sobre">Sobre</a><a
-        href="login.html" class="btn btn-small btn-outline">Área docente <span aria-hidden="true">↗</span></a></nav>
+    <nav class="site-nav" aria-label="Navegação principal"><a href="#fundamentos">Fundamentos</a><a
+        href="#projetos">Cursos</a><a href="#sobre">Sobre</a><a href="login.html" class="btn btn-small btn-outline">Área
+        docente <span aria-hidden="true">↗</span></a></nav>
   </header>
   <main>
     <section class="hero wrap">
-      <div class="hero-copy"><span class="eyebrow"><span class="status-dot"></span> APRENDER • CRIAR •
-          COMPARTILHAR</span>
-        <h1>Ideias que viram<br><span class="highlight">grandes projetos.</span></h1>
-        <p>Um espaço para celebrar descobertas, experiências e trabalhos feitos por quem está sempre aprendendo.</p>
-        <a href="#projetos" class="btn btn-primary">Explorar projetos <span aria-hidden="true">↓</span></a>
-        <div class="hero-note"><span class="note-icon">✳</span><span>Curiosidade em prática,<br><strong>conhecimento em
-              movimento.</strong></span></div>
+      <div class="hero-copy"><span class="eyebrow"><span class="status-dot"></span> PORTFÓLIO ACADÊMICO • BANCO DE
+          DADOS</span>
+        <h1>Organizando dados,<br><span class="highlight">transformando informa&ccedil;&atilde;o.</span></h1>
+        <p>Uma proposta did&aacute;tica para entender como dados relacionados viram informa&ccedil;&atilde;o
+          confi&aacute;vel, consultas &uacute;teis e decis&otilde;es melhores.</p>
+        <a href="#fundamentos" class="btn btn-primary">Explore o projeto <span aria-hidden="true">↓</span></a>
+        <div class="hero-note"><span class="note-icon">✳</span><span>Da modelagem &agrave; consulta,<br><strong>cada
+              rela&ccedil;&atilde;o tem um prop&oacute;sito.</strong></span></div>
       </div>
-      <div class="hero-art" aria-label="Ilustração abstrata de caderno e formas coloridas" role="img">
+      <div class="hero-art database-art" role="img" aria-label="Diagrama de tabelas conectadas por chaves estrangeiras">
         <div class="art-sun"></div>
-        <div class="art-sheet">
-          <div class="sheet-top"><span>MEU CADERNO</span><span>✳</span></div>
-          <div class="sheet-title">uma ideia<br>de cada vez<span>.</span></div>
-          <div class="sheet-lines"><i></i><i></i><i></i></div>
-          <div class="sheet-sticker">✦</div>
-          <div class="sheet-foot">ESTUDO DE PROJETO&nbsp; / &nbsp;2026</div>
-        </div>
         <div class="art-orbit orbit-one"></div>
-        <div class="art-orbit orbit-two"></div><span class="art-star star-one">✳</span><span
-          class="art-star star-two">✦</span><span class="art-caption">feito com intenção<br><b>e um pouco de
-            rosa.</b></span>
+        <div class="art-orbit orbit-two"></div>
+        <article class="db-table db-students"><b>aluno</b><span>PK &nbsp;
+            id_aluno</span><span>nome_aluno</span><span>email_aluno</span></article>
+        <article class="db-table db-enrollments"><b>matricula</b><span>PK &nbsp; id_matricula</span><span>FK &nbsp;
+            id_aluno</span><span>FK &nbsp; id_turma</span></article>
+        <article class="db-table db-classes"><b>turma</b><span>PK &nbsp; id_turma</span><span>FK &nbsp;
+            id_curso</span><span>ano_letivo</span></article>
+        <span class="art-star star-one">&#10022;</span><span class="art-star star-two">&#10023;</span>
+        <span class="art-caption">chaves que conectam<br><b>dados e contexto.</b></span>
       </div>
     </section>
     <section class="stats-strip">
       <div class="wrap stats-inner">
-        <div><b>01</b><span>curiosidade primeiro</span></div>
-        <div><b>✳</b><span>ideias que ganham forma</span></div>
-        <div><b>∞</b><span>espaço para crescer</span></div>
+        <div><b>6</b><span>tabelas relacionadas</span></div>
+        <div><b>1</b><span>modelo relacional</span></div>
+        <div><b>SQL</b><span>consultas que respondem</span></div>
+        <div><b>PostgreSQL</b><span>tecnologia do projeto</span></div>
+      </div>
+    </section>
+    <section id="fundamentos" class="learning-section wrap">
+      <div class="section-heading">
+        <div><span class="eyebrow">O DESAFIO: DA CONFUS&Atilde;O &Agrave; INTEGRIDADE RELACIONAL</span>
+          <h2>Dados conectados,<br><span class="highlight">informa&ccedil;&atilde;o com contexto.</span></h2>
+        </div>
+        <p>Uma planilha isolada pode duplicar registros e esconder rela&ccedil;&otilde;es. Um banco relacional organiza
+          entidades e mant&eacute;m seus v&iacute;nculos consistentes.</p>
+      </div>
+      <div class="learning-grid four-cards">
+        <article class="learning-card"><span class="topic-icon pink">&#9638;</span><span class="project-meta">01 /
+            ORGANIZA&Ccedil;&Atilde;O</span>
+          <h3>Desorganiza&ccedil;&atilde;o de arquivos</h3>
+          <p>Dados espalhados dificultam buscas, atualiza&ccedil;&otilde;es e a leitura do hist&oacute;rico
+            acad&ecirc;mico.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon lilac">&#8984;</span><span class="project-meta">02 /
+            REDUND&Acirc;NCIA</span>
+          <h3>Redund&acirc;ncia de dados</h3>
+          <p>Repetir os mesmos dados aumenta erros e inconsist&ecirc;ncias.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon blue">&#8599;</span><span class="project-meta">03 /
+            MODELAGEM</span>
+          <h3>Dificuldade de consulta</h3>
+          <p>Rela&ccedil;&otilde;es expl&iacute;citas ajudam a responder perguntas com filtros e jun&ccedil;&otilde;es
+            claras.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon peach">&#10003;</span><span class="project-meta">04 /
+            INTEGRIDADE</span>
+          <h3>Integridade referencial</h3>
+          <p>Chaves estrangeiras impedem v&iacute;nculos para registros inexistentes.</p>
+        </article>
+      </div>
+      <div class="section-heading subheading">
+        <div><span class="eyebrow">FUNDAMENTOS TE&Oacute;RICOS ESSENCIAIS</span>
+          <h2>Conceitos que d&atilde;o estrutura <span class="highlight">aos dados.</span></h2>
+        </div>
+      </div>
+      <div class="learning-grid three-cards">
+        <article class="learning-card"><span class="topic-icon pink">&#9635;</span>
+          <h3>Banco de dados</h3>
+          <p>Cole&ccedil;&atilde;o organizada de dados relacionados, pronta para armazenar e recuperar
+            informa&ccedil;&otilde;es.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon lilac">&#9671;</span>
+          <h3>Dado vs. informa&ccedil;&atilde;o</h3>
+          <p>Um valor ganha significado quando est&aacute; associado a uma entidade e ao seu contexto.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon blue">&#9635;</span>
+          <h3>SGBD e SQL</h3>
+          <p>O gerenciador organiza o acesso; SQL descreve consultas e altera&ccedil;&otilde;es nos registros.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon peach">&#9673;</span>
+          <h3>Entidades</h3>
+          <p>Aluno, curso e turma s&atilde;o objetos do dom&iacute;nio representados por tabelas.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon lilac">&#8984;</span>
+          <h3>Atributos</h3>
+          <p>Colunas descrevem cada entidade: nome, data de nascimento ou carga hor&aacute;ria.</p>
+        </article>
+        <article class="learning-card"><span class="topic-icon blue">&#10554;</span>
+          <h3>Relacionamentos</h3>
+          <p>Chaves prim&aacute;rias e estrangeiras conectam registros e expressam as regras do dom&iacute;nio.</p>
+        </article>
+      </div>
+    </section>
+    <section class="fundamentals-section">
+      <div class="wrap learning-section">
+        <div class="section-heading">
+          <div><span class="eyebrow">REPRESENTAR ANTES DE IMPLEMENTAR</span>
+            <h2>Modelos de banco de dados:<br><span class="highlight">hier&aacute;rquico vs. relacional.</span></h2>
+          </div>
+          <p>Compare como cada modelo representa v&iacute;nculos e por que tabelas relacionadas atendem ao sistema
+            acad&ecirc;mico.</p>
+        </div>
+        <div class="learning-grid two-cards">
+          <article class="model-card"><span class="tag">MODELO HIER&Aacute;RQUICO</span>
+            <div class="tree-diagram"><b>ESCOLA</b>
+              <div><span>Turma A</span><span>Turma B</span></div><small>Organiza&ccedil;&atilde;o em &aacute;rvore e
+                n&iacute;veis.</small>
+            </div>
+            <p>Funciona bem quando cada elemento segue um &uacute;nico caminho principal.</p>
+          </article>
+          <article class="model-card"><span class="tag">MODELO RELACIONAL</span>
+            <div class="relation-diagram"><span>aluno</span><i>1 : N</i><span>matricula</span><i>N :
+                1</i><span>turma</span></div>
+            <p>Tabelas e chaves representam rela&ccedil;&otilde;es e permitem consultar registros em conjunto.</p>
+          </article>
+        </div>
+        <div class="comparison-table">
+          <div><b>CRIT&Eacute;RIO</b><b>HIER&Aacute;RQUICO</b><b>RELACIONAL</b></div>
+          <div><span>Organiza&ccedil;&atilde;o</span><span>&Aacute;rvore de registros</span><strong>Tabelas e
+              rela&ccedil;&otilde;es</strong></div>
+          <div><span>V&iacute;nculos</span><span>Percurso por n&iacute;veis</span><strong>Chaves prim&aacute;rias e
+              estrangeiras</strong></div>
+          <div><span>Consulta</span><span>Dependente do caminho</span><strong>SQL com filtros e JOINs</strong></div>
+        </div>
+      </div>
+    </section>
+    <section class="mapping-section">
+      <div class="wrap learning-section">
+        <div class="section-heading">
+          <div><span class="eyebrow">DO MODELO AO BANCO</span>
+            <h2>Nossa modelagem <span class="highlight">de dados.</span></h2>
+          </div>
+          <p>As entidades acad&ecirc;micas viram tabelas. As chaves garantem que cada rela&ccedil;&atilde;o aponte para
+            um registro v&aacute;lido.</p>
+        </div>
+        <div class="learning-grid three-cards">
+          <article class="learning-card"><span class="tag">CONCEITUAL</span>
+            <h3>O dom&iacute;nio</h3>
+            <p>Aluno, professor, curso, turma, matr&iacute;cula e nota s&atilde;o entidades do problema.</p>
+          </article>
+          <article class="learning-card"><span class="tag">L&Oacute;GICO</span>
+            <h3>As rela&ccedil;&otilde;es</h3>
+            <p>Definimos atributos, identificadores e cardinalidades.</p>
+          </article>
+          <article class="learning-card"><span class="tag">F&Iacute;SICO</span>
+            <h3>PostgreSQL</h3>
+            <p>Tipos, restri&ccedil;&otilde;es e &iacute;ndices implementam o modelo em tabelas consult&aacute;veis.</p>
+          </article>
+        </div>
+        <div class="schema-grid">
+          <article><b>aluno</b><small>PK · id_aluno</small><span>nome_aluno</span><span>email_aluno</span></article>
+          <article><b>matricula</b><small>PK · id_matricula</small><span>FK · id_aluno</span><span>FK ·
+              id_turma</span><span>situacao_matricula</span></article>
+          <article><b>turma</b><small>PK · id_turma</small><span>FK · id_curso</span><span>FK ·
+              id_professor</span><span>ano_letivo</span></article>
+          <article><b>nota</b><small>PK · id_nota</small><span>FK ·
+              id_matricula</span><span>valor_nota</span><span>data_nota</span></article>
+        </div>
+      </div>
+    </section>
+    <section class="learning-section wrap sql-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">SQL NA PR&Aacute;TICA</span>
+          <h2>Quatro comandos <span class="highlight">essenciais.</span></h2>
+        </div>
+        <p>Estrutura, altera&ccedil;&atilde;o, consulta e controle formam o vocabul&aacute;rio b&aacute;sico dos bancos
+          relacionais.</p>
+      </div>
+      <div class="command-grid">
+        <article><b>DDL</b>
+          <h3>Defini&ccedil;&atilde;o</h3><code>CREATE TABLE</code>
+          <p>Crie a estrutura de uma entidade.</p>
+        </article>
+        <article><b>DML</b>
+          <h3>Manipula&ccedil;&atilde;o</h3><code>INSERT · UPDATE</code>
+          <p>Inclua e atualize registros.</p>
+        </article>
+        <article><b>DQL</b>
+          <h3>Consulta</h3><code>SELECT · JOIN</code>
+          <p>Busque dados relacionados.</p>
+        </article>
+        <article><b>DCL</b>
+          <h3>Controle</h3><code>GRANT · REVOKE</code>
+          <p>Defina permiss&otilde;es de acesso.</p>
+        </article>
+      </div>
+      <div class="code-example">
+        <div><span>CONSULTA DE EXEMPLO</span><span>PostgreSQL</span></div>
+        <pre><code>SELECT a.nome_aluno, c.nome_curso, n.valor_nota
+FROM public.aluno AS a
+JOIN public.matricula AS m ON m.id_aluno = a.id_aluno
+JOIN public.turma AS t ON t.id_turma = m.id_turma
+JOIN public.curso AS c ON c.id_curso = t.id_curso
+LEFT JOIN public.nota AS n ON n.id_matricula = m.id_matricula
+ORDER BY a.nome_aluno;</code></pre>
+        <p>Uma consulta relaciona tabelas pelos identificadores e retorna apenas os campos necess&aacute;rios.</p>
+      </div>
+    </section>
+    <section class="sgbd-section">
+      <div class="wrap learning-section">
+        <div class="section-heading">
+          <div><span class="eyebrow">TECNOLOGIAS RELACIONAIS</span>
+            <h2>Qual SGBD <span class="highlight">escolher?</span></h2>
+          </div>
+          <p>O modelo relacional pode ser implementado em diferentes sistemas gerenciadores. Este projeto usa
+            PostgreSQL.</p>
+        </div>
+        <div class="learning-grid three-cards">
+          <article class="learning-card selected-sgbd"><span class="tag">USADO NO DATAPINK</span>
+            <h3>PostgreSQL</h3>
+            <p>SGBD relacional usado pelo Supabase neste projeto para tabelas, restri&ccedil;&otilde;es, views e
+              pol&iacute;ticas de acesso.</p>
+          </article>
+          <article class="learning-card"><span class="tag">RELACIONAL</span>
+            <h3>MySQL</h3>
+            <p>Outra op&ccedil;&atilde;o relacional para aplica&ccedil;&otilde;es que organizam dados em tabelas e
+              rela&ccedil;&otilde;es.</p>
+          </article>
+          <article class="learning-card"><span class="tag">EMBUTIDO</span>
+            <h3>SQLite</h3>
+            <p>Banco relacional compacto, com armazenamento em arquivo e uso comum em aplica&ccedil;&otilde;es locais.
+            </p>
+          </article>
+        </div>
       </div>
     </section>
     <section id="projetos" class="projects-section wrap">
       <div class="section-heading">
-        <div><span class="eyebrow">VITRINE DE APRENDIZAGEM</span>
-          <h2>Feito para <span class="highlight">compartilhar.</span></h2>
+        <div><span class="eyebrow">PERCURSOS FORMATIVOS</span>
+          <h2>Aprender fazendo<span class="highlight">.</span></h2>
         </div>
-        <p>Projetos e experiências que mostram o que acontece quando a gente aprende fazendo.</p>
+        <p>Cursos em destaque na vitrine acad&ecirc;mica DataPink.</p>
       </div>
       <div id="projectsGrid" class="projects-grid" aria-live="polite">
-        <div class="loading-card"><span class="loading-dot"></span> Carregando projetos...</div>
+        <div class="loading-card"><span class="loading-dot"></span> Carregando cursos...</div>
       </div>
       <p id="projectsMessage" class="empty-message" hidden></p>
     </section>
@@ -74,9 +274,9 @@
       <div class="wrap about-inner">
         <div class="about-mark">dp<span>✳</span></div>
         <div><span class="eyebrow">UM PROJETO DE EDUCAÇÃO</span>
-          <h2>Aprender também é<br><span class="highlight">deixar sua marca.</span></h2>
-          <p>O DataPink reúne percursos, projetos e resultados acadêmicos em um lugar pensado para dar visibilidade ao
-            processo de aprender.</p>
+          <h2>Conhecimento organizado.<br><span class="highlight">Decis&otilde;es melhores.</span></h2>
+          <p>O DataPink conecta fundamentos de bancos de dados a uma aplica&ccedil;&atilde;o acad&ecirc;mica com
+            autentica&ccedil;&atilde;o, controle de acesso e integridade relacional.</p>
         </div><a href="login.html" class="btn btn-dark">Acesso docente <span aria-hidden="true">↗</span></a>
       </div>
     </section>

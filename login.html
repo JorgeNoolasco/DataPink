@@ -1,16 +1,59 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#fff8fc">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8fc">
   <title>Entrar — DataPink</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/variables.css"><link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/login.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/login.css">
 </head>
+
 <body class="login-page">
   <a class="login-back" href="index.html">← <span>Voltar ao portfólio</span></a>
-  <main class="login-layout"><aside class="login-aside"><a class="brand" href="index.html"><span class="brand-mark">d<span>p</span></span><span>data<span class="brand-accent">pink</span><small>PORTFÓLIO ACADÊMICO</small></span></a><div class="login-art"><div class="login-circle"></div><div class="login-card-illustration"><span>ESPAÇO DOCENTE</span><b>Organize.<br>Compartilhe.<br><em>Acompanhe.</em></b><div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="login-spark">✳</span><span class="login-sticker">✦</span></div><p class="aside-caption">Um lugar para acompanhar<br>cada etapa da aprendizagem.</p></aside>
-    <section class="login-main"><div class="login-card"><span class="eyebrow">ACESSO DOCENTE <span class="login-version">DATAPINK / 01</span></span><h1>Bem-vindo<span class="highlight"> de volta.</span></h1><p class="login-intro">Entre para gerenciar turmas, matrículas e notas.</p><div class="access-notice"><span>✳</span><p><strong>Área restrita</strong><br>Use o e-mail institucional cadastrado para sua conta docente.</p></div><form id="loginForm" class="login-form"><label for="email">E-mail institucional</label><input class="input-field" type="email" id="email" name="email" autocomplete="username" placeholder="voce@escola.edu.br" required><label for="password">Senha</label><div class="password-wrap"><input class="input-field" type="password" id="password" name="password" autocomplete="current-password" placeholder="Sua senha" required><button class="password-toggle" type="button" aria-label="Mostrar senha" aria-pressed="false">◉</button></div><button type="submit" class="btn btn-primary login-submit">Entrar no painel <span aria-hidden="true">↗</span></button><p id="loginMessage" class="form-message" role="status" aria-live="polite"></p></form><div class="login-foot"><span>DataPink para educadores</span><span>✳</span></div></div></section></main>
+  <main class="login-layout">
+    <aside class="login-aside"><a class="brand" href="index.html"><span
+          class="brand-mark">d<span>p</span></span><span>data<span class="brand-accent">pink</span><small>PORTFÓLIO
+            ACADÊMICO</small></span></a>
+      <div class="login-art">
+        <div class="login-circle"></div>
+        <div class="login-card-illustration"><span>ESPAÇO
+            DOCENTE</span><b>Organize.<br>Compartilhe.<br><em>Acompanhe.</em></b>
+          <div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div><span class="login-spark">✳</span><span class="login-sticker">✦</span>
+      </div>
+      <p class="aside-caption">Um lugar para acompanhar<br>cada etapa da aprendizagem.</p>
+    </aside>
+    <section class="login-main">
+      <div class="login-card"><span class="eyebrow">ACESSO DOCENTE <span class="login-version">DATAPINK /
+            01</span></span>
+        <h1>Bem-vindo<span class="highlight"> de volta.</span></h1>
+        <p class="login-intro">Entre para gerenciar turmas, matrículas e notas.</p>
+        <div class="access-notice"><span>✳</span>
+          <p><strong>Área restrita</strong><br>Use o e-mail institucional cadastrado para sua conta docente.</p>
+        </div>
+        <form id="loginForm" class="login-form"><label for="email">E-mail institucional</label><input
+            class="input-field" type="email" id="email" name="email" autocomplete="username"
+            placeholder="voce@escola.edu.br" required><label for="password">Senha</label>
+          <div class="password-wrap"><input class="input-field" type="password" id="password" name="password"
+              autocomplete="current-password" placeholder="Sua senha" required><button class="password-toggle"
+              type="button" aria-label="Mostrar senha" aria-pressed="false">◉</button></div><button type="submit"
+            class="btn btn-primary login-submit">Entrar no painel <span aria-hidden="true">↗</span></button>
+          <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+        </form>
+        <div class="login-foot"><span>DataPink para educadores</span><span>✳</span></div>
+      </div>
+    </section>
+  </main>
   <script type="module" src="js/auth.js"></script>
 </body>
+
 </html>

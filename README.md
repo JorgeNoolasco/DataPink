@@ -46,14 +46,14 @@ FROM auth.users u WHERE lower(u.email) = lower(p.email_professor)
 
 ## 4. Conectar o frontend
 
-Edite `js/config.js`:
+Edite `js/config.js` com os valores públicos do projeto:
 
 ```js
 export const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-export const SUPABASE_ANON_KEY = 'sb_publishable_SUA_CHAVE';
+export const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_SUA_CHAVE';
 ```
 
-O nome `SUPABASE_ANON_KEY` é mantido por compatibilidade interna; pode receber a publishable key ou a chave pública `anon`. Ambas são visíveis no navegador por natureza. A segurança vem das políticas RLS. Nunca use `service_role` aqui.
+A chave publishable (ou a chave pública `anon` legada) será visível no navegador por natureza. A segurança vem das políticas RLS. Nunca use `service_role` aqui.
 
 Sirva o projeto por HTTP local, por exemplo com Live Server no VS Code (`http://127.0.0.1:5500`); módulos ES não funcionam corretamente em `file://`.
 

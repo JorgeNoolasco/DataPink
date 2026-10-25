@@ -70,7 +70,7 @@ function renderClasses() {
 
 async function loadData() {
   const [studentResult, classResult] = await Promise.all([
-    supabase.from('aluno').select('id_aluno,nome_aluno,email_aluno,telefone_aluno,data_nascimento,matricula(id_turma)').order('nome_aluno'),
+    supabase.from('aluno').select('id_aluno,nome_aluno,email_aluno,telefone_aluno,data_nascimento,matricula(id_matricula,id_turma)').order('nome_aluno'),
     supabase.from('turma').select('id_turma,ano_letivo,semestre_turma,turno_turma,curso:curso(nome_curso),professor:professor(nome_professor),matricula(id_matricula)').order('ano_letivo', { ascending: false }),
   ]);
   if (studentResult.error) throw studentResult.error;
@@ -92,7 +92,8 @@ function openStudent(student = null) {
   document.querySelector('#studentName').value = student?.nome_aluno || '';
   document.querySelector('#studentEmail').value = student?.email_aluno || '';
   document.querySelector('#studentBirth').value = student?.data_nascimento || '';
-  document.querySelector('#studentBirth').max = new Date().toISOString().slice(0, 10);
+  const today = new Date();
+  document.querySelector('#studentBirth').max = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
   document.querySelector('#studentPhone').value = student?.telefone_aluno?.trim() || '';
   const classSelect = document.querySelector('#studentClass');
   classSelect.innerHTML = '<option value="">Sem turma por enquanto</option>' + classes.map((item) => `<option value="${item.id_turma}">${escapeText(item.curso?.nome_curso || 'Curso')} · ${item.ano_letivo}/${item.semestre_turma}</option>`).join('');
@@ -151,12 +152,19 @@ form.addEventListener('submit', async (event) => {
       if (error) throw error;
       studentId = data.id_aluno;
     }
-    if (selectedClass && !students.find((student) => student.id_aluno === studentId)?.matricula?.some((item) => item.id_turma === Number(selectedClass))) {
-      const { error } = await supabase.from('matricula').insert({ id_aluno: studentId, id_turma: Number(selectedClass), situacao_matricula: 'Ativa' });
+    const currentEnrollment = students.find((student) => student.id_aluno === studentId)?.matricula?.[0];
+    if (selectedClass) {
+      const enrollmentChange = currentEnrollment
+        ? supabase.from('matricula').update({ id_turma: Number(selectedClass) }).eq('id_matricula', currentEnrollment.id_matricula)
+        : supabase.from('matricula').insert({ id_aluno: studentId, id_turma: Number(selectedClass), situacao_matricula: 'Ativa' });
+      const { error } = await enrollmentChange;
       if (error) {
         if (!id) await supabase.from('aluno').delete().eq('id_aluno', studentId);
         throw error;
       }
+    } else if (currentEnrollment) {
+      const { error } = await supabase.from('matricula').delete().eq('id_matricula', currentEnrollment.id_matricula);
+      if (error) throw error;
     }
     dialog.close();
     await refresh();

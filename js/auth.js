@@ -1,9 +1,22 @@
-import { supabase, isSupabaseConfigured, setupMessage } from './supabase.js';
+import { DEMO_EMAIL, DEMO_PASSWORD, DEMO_NAME, DEMO_ROLE } from './demo-config.js';
 
+const SESSION_KEY = 'datapink_demo_session';
 const form = document.querySelector('#loginForm');
 const message = document.querySelector('#loginMessage');
 const toggle = document.querySelector('.password-toggle');
 const password = document.querySelector('#password');
+const submitButton = form.querySelector('[type="submit"]');
+
+function hasDemoSession() {
+  try {
+    const session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+    return session?.mode === 'demo' && session.email === DEMO_EMAIL && session.name === DEMO_NAME && session.role === DEMO_ROLE;
+  } catch {
+    return false;
+  }
+}
+
+if (hasDemoSession()) window.location.replace('admin.html');
 
 toggle.addEventListener('click', () => {
   const show = password.type === 'password';
@@ -12,37 +25,27 @@ toggle.addEventListener('click', () => {
   toggle.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
 });
 
-form.addEventListener('submit', async (event) => {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
   message.textContent = '';
-  if (!isSupabaseConfigured) {
-    message.textContent = setupMessage;
+  if (!form.reportValidity()) return;
+
+  const email = form.elements.email.value.trim().toLocaleLowerCase('pt-BR');
+  const enteredPassword = form.elements.password.value;
+  if (email !== DEMO_EMAIL.toLocaleLowerCase('pt-BR') || enteredPassword !== DEMO_PASSWORD) {
+    message.textContent = 'E-mail ou senha incorretos. Confira os dados e tente novamente.';
+    password.focus();
     return;
   }
-  const button = form.querySelector('[type="submit"]');
-  button.disabled = true;
-  button.textContent = 'Entrando...';
-  try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: form.email.value.trim(), password: form.password.value,
-    });
-    if (error) throw error;
-    const { data: teacher, error: teacherError } = await supabase
-      .from('professor').select('id_professor').eq('id_auth', data.user.id).maybeSingle();
-    if (teacherError || !teacher) {
-      await supabase.auth.signOut();
-      throw new Error('Esta conta não está cadastrada como docente. Peça ao administrador para cadastrá-la.');
-    }
-    window.location.replace('admin.html');
-  } catch (error) {
-    message.textContent = error.message || 'Não foi possível entrar. Confira seus dados e tente novamente.';
-    button.disabled = false;
-    button.innerHTML = 'Entrar no painel <span aria-hidden="true">↗</span>';
-  }
-});
 
-if (isSupabaseConfigured) {
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    if (session) window.location.replace('admin.html');
-  });
-}
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+    mode: 'demo',
+    name: DEMO_NAME,
+    email: DEMO_EMAIL,
+    role: DEMO_ROLE,
+    createdAt: new Date().toISOString(),
+  }));
+  submitButton.disabled = true;
+  submitButton.textContent = 'Acessando o painel...';
+  window.location.assign('admin.html');
+});

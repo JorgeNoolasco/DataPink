@@ -1,90 +1,35 @@
 # DataPink
 
-Aplicação estática em HTML5, CSS3 e JavaScript Vanilla. Usa ES modules no navegador, `@supabase/supabase-js` v2 via CDN oficial e Supabase PostgreSQL/Auth. Não há etapa de build nem framework frontend.
+Site estático em HTML, CSS e JavaScript Vanilla, hospedável na Vercel. O acesso ao painel usa uma credencial fictícia local; o painel carrega somente registros de demonstração definidos em `js/admin.js`.
 
-## 1. Criar o projeto Supabase
+## Login de demonstração
 
-1. Crie um projeto em [supabase.com](https://supabase.com/) e guarde a senha do banco em um gerenciador de senhas. Ela não é usada pelo frontend.
-2. Em **Authentication → Providers**, mantenha Email habilitado. Em **Authentication → Settings**, desative novos cadastros públicos se somente a equipe deve criar contas.
-3. Em **Project Settings → API**, copie **Project URL** e **Publishable key** (`sb_publishable_...`). A chave `anon` legada também funciona. Não copie `service_role` nem a senha PostgreSQL para os arquivos web.
+1. Abra `js/demo-config.js` e defina `DEMO_PASSWORD` com uma senha fictícia para a demonstração.
+2. Publique o arquivo junto com o site. Em hospedagem estática, qualquer arquivo JavaScript entregue ao navegador pode ser inspecionado; essa senha não é um segredo nem uma proteção real.
+3. Entre usando o e-mail `wiverson@pinkmgdocente.com.br` e a senha configurada no arquivo.
+4. A sessão fica em `sessionStorage` e dura somente na aba atual. Atualizar a página mantém a sessão. O botão **Sair** remove a sessão.
 
-## 2. Criar estrutura, políticas, views e demonstração
+A senha incluída no projeto (`DataPinkDemo-2026!`) é apenas uma credencial inventada para testar o fluxo. Troque-a por outra credencial igualmente fictícia antes de divulgar a demonstração. Nunca use a senha real de uma pessoa.
 
-No **SQL Editor**, execute os arquivos na ordem abaixo em um projeto novo. Se você já executou a versão anterior de `policies.sql`, execute apenas a migração de cursos antes de continuar.
+## Teste manual
 
-1. `sql/schema.sql` — tabelas e relacionamentos (`professor`, `curso`, `turma`, `aluno`, `matricula`, `nota`).
-2. `sql/policies.sql` — RLS, funções de autorização e grants. Professores autorizados acessam seus dados acadêmicos; administradores têm acesso global. Visitantes não recebem acesso às tabelas acadêmicas.
-3. `sql/migration_001_course_access.sql` — permite que docentes autorizados consultem o catálogo de cursos para criar turmas; pode ser executado novamente.
-4. `sql/views.sql` — `vw_boletim_aluno` (somente docentes autorizados, com RLS das tabelas base) e `vw_portfolio_cursos` (somente nome e descrição para a vitrine pública).
-5. `sql/seed.sql` — cursos, turmas e registros de demonstração fictícios. O professor de demonstração começa sem uma conta Auth associada.
+1. Abra `login.html` servindo o projeto em HTTP local ou pelo deploy da Vercel.
+2. Teste os campos vazios e uma combinação incorreta; o navegador valida os campos obrigatórios e o formulário mostra a mensagem de erro.
+3. Teste o e-mail de demonstração com `DEMO_PASSWORD` em `js/demo-config.js`; o navegador grava a sessão e abre `admin.html`.
+4. Atualize `admin.html`; o nome Wiverson e os dados fictícios permanecem visíveis.
+5. Abra `admin.html` em uma nova aba sem sessão; a página redireciona para `login.html`.
+6. Use **Sair** e tente reabrir o painel; a página retorna ao login.
+7. Redimensione a janela para computador e celular; o CSS responsivo existente adapta login e painel.
+8. Clique no ícone ao lado da senha para alternar entre mostrar e ocultar o campo.
 
-## 3. Criar e vincular contas de docentes
+## Dados e integrações
 
-1. Em **Authentication → Users**, crie/invite um usuário docente e defina uma senha inicial segura. O e-mail deve corresponder ao cadastro em `public.professor`.
-2. Copie o `User UID` mostrado para essa conta.
-3. No SQL Editor, cadastre ou vincule o docente. Exemplo para uma conta já criada:
+- `js/auth.js` implementa apenas a verificação local de demonstração, sem Supabase Auth nem serviço externo de autenticação.
+- `js/admin.js` não importa nem chama Supabase: as tabelas do painel usam apenas dados fictícios locais e são somente para visualização. A sessão demonstrativa nunca é enviada como token nem usada para consultar ou gravar informações acadêmicas reais.
+- A vitrine pública ainda pode consultar `vw_portfolio_cursos` pelo cliente Supabase configurado em `js/config.js`. Essa leitura é independente do login local.
+- Os scripts de banco em `sql/` continuam no repositório para o projeto acadêmico. Eles não são necessários para o login nem para visualizar o painel demonstrativo e são excluídos do deploy estático por `.vercelignore`.
+- Para publicar, conecte o repositório à Vercel sem comando de build e mantenha a raiz como diretório de saída.
 
-```sql
-INSERT INTO public.professor (id_auth, nome_professor, email_professor, tipo_acesso)
-VALUES ('USER-UUID', 'Nome do docente', 'docente@escola.edu.br', 'professor')
-ON CONFLICT (email_professor) DO UPDATE
-SET id_auth = EXCLUDED.id_auth, nome_professor = EXCLUDED.nome_professor;
-```
+## Aviso
 
-O vínculo de autorização é feito pelo UUID de `auth.users`, e não apenas pelo e-mail. Para promover um administrador, faça isso manualmente no SQL Editor:
-
-```sql
-UPDATE public.professor SET tipo_acesso = 'admin' WHERE id_auth = 'USER-UUID';
-```
-
-O app não permite que um professor altere seu próprio papel. Para associar o usuário `mariana.costa@example.edu.br` incluído no seed, crie uma conta Auth com esse e-mail e execute:
-
-```sql
-UPDATE public.professor p SET id_auth = u.id
-FROM auth.users u WHERE lower(u.email) = lower(p.email_professor)
-  AND p.email_professor = 'mariana.costa@example.edu.br';
-```
-
-## 4. Conectar o frontend
-
-Edite `js/config.js` com os valores públicos do projeto:
-
-```js
-export const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-export const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_SUA_CHAVE';
-```
-
-A chave publishable (ou a chave pública `anon` legada) será visível no navegador por natureza. A segurança vem das políticas RLS. Nunca use `service_role` aqui.
-
-Sirva o projeto por HTTP local, por exemplo com Live Server no VS Code (`http://127.0.0.1:5500`); módulos ES não funcionam corretamente em `file://`.
-
-## 5. Configurar URLs do Auth
-
-Em **Authentication → URL Configuration**:
-
-- **Site URL**: defina a URL principal, por exemplo `https://seu-projeto.vercel.app`.
-- **Redirect URLs**: adicione `http://127.0.0.1:5500/**`, `http://localhost:5500/**` e `https://seu-projeto.vercel.app/**` (troque pela URL de produção real).
-
-O login por senha abre `admin.html` após autenticar. O redirecionamento cadastrado também cobre callbacks futuros e a navegação de sessão.
-
-## 6. Publicar na Vercel
-
-1. Importe este repositório na Vercel e mantenha o diretório raiz como **Root Directory**.
-2. Não informe Build Command nem Output Directory; a Vercel publica o site estático diretamente.
-3. `index.html`, `login.html` e `admin.html` ficam na raiz e abrem em `/`, `/login.html` e `/admin.html`.
-4. `.vercelignore` exclui `sql/` e documentação do pacote publicado. Os scripts SQL continuam no repositório para configuração do banco.
-5. Depois do primeiro deploy, copie o domínio final para a lista **Redirect URLs** do Supabase.
-
-## 7. Verificar acesso e funcionalidades
-
-1. Abra a página inicial sem sessão: cursos podem aparecer na vitrine; nenhuma tabela com nomes, notas ou contatos de alunos é pública.
-2. Tente `/admin.html` sem login: a página envia para o login. Tente entrar com uma conta sem linha vinculada em `professor`: o Auth encerra a sessão e nega acesso.
-3. Entre com um docente vinculado: confira as turmas atribuídas, cadastre e edite um aluno, crie uma turma, lance uma avaliação, edite-a e exclua registros de teste. A exclusão avisa que matrículas e notas dependentes também serão apagadas.
-4. Entre com dois docentes: cada um deve ver apenas suas turmas e os alunos acessíveis por elas, além dos próprios cadastros recém-criados.
-5. Promova uma conta de teste a `admin`: ela deve consultar dados de todas as turmas.
-6. Confira a view de boletim com uma sessão docente autenticada (aba **Network** do navegador ou REST API usando o token dessa sessão): ela deve retornar somente turmas acessíveis. Não use o SQL Editor para validar RLS: ele executa como banco privilegiado. Pela API anon, `/rest/v1/vw_boletim_aluno` deve ser negado e `/rest/v1/vw_portfolio_cursos` deve funcionar.
-7. Teste em desktop e largura móvel. As telas usam CSS responsivo; as mensagens de login e operações aparecem junto aos formulários.
-
-## Escopo da interface
-
-O painel oferece CRUD para alunos, turmas e avaliações, além da associação de alunos a turmas. Cursos são provisionados no banco e aparecem na vitrine pública; a tela de administração de cursos não faz parte desta interface. As alterações de notas e matrículas passam pelas políticas RLS do banco.
+Este login é apenas demonstrativo. O navegador pode alterar `sessionStorage` e os arquivos entregues ao cliente; portanto, a sessão não autentica nem protege dados reais. Não conecte este fluxo a tabelas acadêmicas privadas. Um sistema real precisa de autenticação confiável no servidor e autorização no banco.

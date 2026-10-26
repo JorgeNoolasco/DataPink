@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/global.css">
@@ -36,9 +36,10 @@
     <header class="admin-header">
       <div class="mobile-brand">DATAPINK <span>✳</span></div>
       <div class="breadcrumb">ESPAÇO DOCENTE <span>/</span> <b id="breadcrumbTitle">VISÃO GERAL</b></div>
-      <div class="user-pill"><span class="user-avatar">D</span><span id="userEmail">Docente</span></div>
+      <div class="user-pill"><span class="user-avatar">W</span><span><b id="userEmail">Wiverson</b><small id="userRole">Professor</small></span></div>
     </header>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="demoNotice" class="demo-notice" role="note" hidden><strong>Modo de demonstra&ccedil;&atilde;o.</strong> Os registros exibidos s&atilde;o fict&iacute;cios e somente para visualiza&ccedil;&atilde;o. Esta sess&atilde;o n&atilde;o autoriza acesso a dados acad&ecirc;micos reais.</div>
     <div class="admin-content">
       <section id="overviewView" class="admin-view">
         <div class="page-heading">
@@ -46,10 +47,7 @@
             <h1>Bom dia, <span class="highlight">professor(a).</span></h1>
             <p>Acompanhe suas turmas e os registros acadêmicos.</p>
           </div>
-          <div class="heading-actions"><span class="date-chip" id="todayDate"></span><button
-              class="btn btn-primary btn-small" data-create="student">+ Aluno</button><button
-              class="btn btn-outline btn-small" data-create="class">+ Turma</button><button
-              class="btn btn-outline btn-small" data-create="grade">+ Avaliação</button></div>
+          <span class="date-chip" id="todayDate"></span>
         </div>
         <div id="dashboardMessage" class="dashboard-message" role="status"></div>
         <div class="stat-cards">
@@ -99,7 +97,7 @@
           <div><span class="eyebrow">BASE ACADÊMICA</span>
             <h1>Alunos<span class="highlight">.</span></h1>
             <p>Consulte e atualize os registros dos seus alunos.</p>
-          </div><button id="addStudentButton" class="btn btn-primary">+ Novo aluno</button>
+          </div>
         </div>
         <section class="panel-card full-panel">
           <div class="toolbar"><label class="search-box"><span>⌕</span><input id="studentSearch" type="search"
@@ -113,12 +111,11 @@
                   <th>E-MAIL</th>
                   <th>TELEFONE</th>
                   <th>MATRÍCULAS</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody id="studentsTable">
                 <tr>
-                  <td colspan="5" class="table-placeholder">Carregando alunos...</td>
+                  <td colspan="4" class="table-placeholder">Carregando registros de demonstra&ccedil;&atilde;o...</td>
                 </tr>
               </tbody>
             </table>
@@ -130,7 +127,7 @@
           <div><span class="eyebrow">ACOMPANHAMENTO ACADÊMICO</span>
             <h1>Turmas<span class="highlight">.</span></h1>
             <p>Veja cursos, períodos e matrículas sob seu acompanhamento.</p>
-          </div><button id="addClassButton" class="btn btn-primary">+ Nova turma</button>
+          </div>
         </div>
         <section class="panel-card full-panel">
           <div class="table-scroll">
@@ -142,12 +139,11 @@
                   <th>TURNO</th>
                   <th>PROFESSOR(A)</th>
                   <th>ALUNOS</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody id="classesTable">
                 <tr>
-                  <td colspan="6" class="table-placeholder">Carregando turmas...</td>
+                  <td colspan="5" class="table-placeholder">Carregando turmas fict&iacute;cias...</td>
                 </tr>
               </tbody>
             </table>
@@ -159,7 +155,7 @@
           <div><span class="eyebrow">ACOMPANHAMENTO ACADÊMICO</span>
             <h1>Avaliações<span class="highlight">.</span></h1>
             <p>Registre e atualize notas das matrículas sob seu acompanhamento.</p>
-          </div><button id="addGradeButton" class="btn btn-primary">+ Lançar avaliação</button>
+          </div>
         </div>
         <section class="panel-card full-panel">
           <div class="table-scroll">
@@ -170,12 +166,11 @@
                   <th>CURSO</th>
                   <th>AVALIAÇÃO</th>
                   <th>NOTA</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody id="gradesTable">
                 <tr>
-                  <td colspan="5" class="table-placeholder">Carregando avaliações...</td>
+                  <td colspan="4" class="table-placeholder">Carregando avaliações...</td>
                 </tr>
               </tbody>
             </table>
@@ -184,77 +179,6 @@
       </section>
     </div>
   </main>
-  <dialog id="studentDialog" class="student-dialog">
-    <form id="studentForm" method="dialog">
-      <div class="dialog-heading">
-        <div><span class="eyebrow">BASE ACADÊMICA</span>
-          <h2 id="dialogTitle">Novo aluno</h2>
-        </div><button type="button" class="dialog-close" aria-label="Fechar">×</button>
-      </div><input type="hidden" id="studentId"><label for="studentName">Nome completo</label><input class="input-field"
-        id="studentName" maxlength="100" required><label for="studentEmail">E-mail</label><input class="input-field"
-        type="email" id="studentEmail" maxlength="255" required><label for="studentBirth">Data de
-        nascimento</label><input class="input-field" type="date" id="studentBirth" required><label
-        for="studentPhone">Telefone</label><input class="input-field" id="studentPhone" type="tel" maxlength="11"
-        pattern="[0-9]{10,11}" inputmode="numeric" placeholder="11912345678"><label for="studentClass">Vincular a uma
-        turma</label><select class="input-field" id="studentClass">
-        <option value="">Sem turma por enquanto</option>
-      </select>
-      <p id="studentFormMessage" class="form-message" role="status"></p>
-      <div class="dialog-actions"><button type="button" class="btn btn-outline dialog-close">Cancelar</button><button
-          type="submit" class="btn btn-primary">Salvar aluno</button></div>
-    </form>
-  </dialog>
-  <dialog id="classDialog" class="student-dialog">
-    <form id="classForm" method="dialog">
-      <div class="dialog-heading">
-        <div><span class="eyebrow">ACOMPANHAMENTO ACADÊMICO</span>
-          <h2 id="classDialogTitle">Nova turma</h2>
-        </div><button type="button" class="class-dialog-close dialog-close" aria-label="Fechar">×</button>
-      </div>
-      <input type="hidden" id="classId">
-      <label for="classCourse">Curso</label><select class="input-field" id="classCourse" required>
-        <option value="">Selecione um curso</option>
-      </select>
-      <label for="classYear">Ano letivo</label><input class="input-field" id="classYear" type="number" min="2000"
-        max="2100" required>
-      <label for="classSemester">Semestre</label><select class="input-field" id="classSemester" required>
-        <option value="1">1º semestre</option>
-        <option value="2">2º semestre</option>
-      </select>
-      <label for="classShift">Turno</label><select class="input-field" id="classShift" required>
-        <option>Manhã</option>
-        <option>Tarde</option>
-        <option>Noite</option>
-        <option>Integral</option>
-      </select>
-      <p id="classFormMessage" class="form-message" role="status"></p>
-      <div class="dialog-actions"><button type="button"
-          class="btn btn-outline class-dialog-close">Cancelar</button><button type="submit"
-          class="btn btn-primary">Salvar turma</button></div>
-    </form>
-  </dialog>
-  <dialog id="gradeDialog" class="student-dialog">
-    <form id="gradeForm" method="dialog">
-      <div class="dialog-heading">
-        <div><span class="eyebrow">REGISTRO ACADÊMICO</span>
-          <h2 id="gradeDialogTitle">Lançar avaliação</h2>
-        </div><button type="button" class="grade-dialog-close dialog-close" aria-label="Fechar">×</button>
-      </div>
-      <input type="hidden" id="gradeId">
-      <label for="gradeStudent">Aluno e matrícula</label><select class="input-field" id="gradeStudent" required>
-        <option value="">Selecione a matrícula</option>
-      </select>
-      <label for="gradeDescription">Instrumento avaliativo</label><input class="input-field" id="gradeDescription"
-        maxlength="100" required>
-      <label for="gradeValue">Nota (0 a 10)</label><input class="input-field" id="gradeValue" type="number" min="0"
-        max="10" step="0.01" required>
-      <label for="gradeDate">Data da avaliação</label><input class="input-field" id="gradeDate" type="date" required>
-      <p id="gradeFormMessage" class="form-message" role="status"></p>
-      <div class="dialog-actions"><button type="button"
-          class="btn btn-outline grade-dialog-close">Cancelar</button><button type="submit"
-          class="btn btn-primary">Salvar avaliação</button></div>
-    </form>
-  </dialog>
   <script type="module" src="js/admin.js"></script>
 </body>
 

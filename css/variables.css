@@ -1,18 +1,18 @@
 :root {
   color-scheme: light;
-  --color-primary: #ef5d91;
+  --color-primary: #F06292;
   --color-primary-dark: #b63465;
   --color-primary-soft: #ffe0ec;
-  --color-lilac: #dfd2ff;
-  --color-blue: #c3e5ff;
+  --color-lilac: #D8C7FF;
+  --color-blue: #BDE0FE;
   --color-bg: #fff8fc;
   --color-surface: #fff;
   --color-ink: #282535;
   --color-muted: #777383;
   --color-line: #e9e2e8;
   --font-headline: 'Outfit', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --border-thick: 2px solid var(--color-ink);
   --border-thin: 1.5px solid var(--color-ink);
   --shadow-hard: 4px 4px 0 var(--color-ink);
